@@ -41,7 +41,7 @@ RUN apt install -y \
 RUN  rm -rf /var/lib/apt/lists/*
 
 # Install pacakges from requirements.txt
-COPY requirements.txt  /tmp/requirements.txt
+COPY hobot_cicd/requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
 
