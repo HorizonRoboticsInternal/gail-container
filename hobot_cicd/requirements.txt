@@ -1,6 +1,7 @@
 # Hobot Specific Dependencies
 mujoco>=2.1.2
 dm_control
+numpy-quaternion
 
 # Alf Dependencies
 atari_py==0.2.9
