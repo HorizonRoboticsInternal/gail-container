@@ -18,7 +18,7 @@ The main implementation can be found at the top-level [Dockerfile](./Dockerfile)
    [here](https://github.com/HorizonRoboticsInternal/gail-container/pkgs/container/gail-container).
    The one tagged with "latest" is the one that it just builds.
    
-   #[Example](./resources/images/gail_packages.jpg])
+   #[Example](https://github.com/HorizonRoboticsInternal/gail-container/blob/main/resources/images/gail_packages.jpg?raw=true)
    
    In the above example, you can now use 
    
