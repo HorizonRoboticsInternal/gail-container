@@ -1,7 +1,6 @@
 # Hobot Specific Dependencies
-cpplint
-clang-format == 9.0
-pre-commit
+mujoco>=2.1.2
+dm_control
 
 # Alf Dependencies
 atari_py==0.2.9
@@ -32,3 +31,4 @@ cnest==1.0.4
 pydocstyle==4.0.0
 pylint==2.3.1
 yapf==0.28.0
+pre-commit
