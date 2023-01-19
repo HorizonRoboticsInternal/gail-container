@@ -23,6 +23,7 @@ psutil
 pybullet==3.2.5
 pyglet==1.3.2  # higher version breaks classic control renderi
 rectangle-packer==2.0.0
+tensorboard==2.6.0
 torch==1.12.1+cpu
 torchvision==0.13.1+cpu
 torchtext==0.13.1
