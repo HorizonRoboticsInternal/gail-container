@@ -21,6 +21,9 @@ RUN apt install -y python3  # This is python 3.10 in ubuntu 22.04
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 RUN apt install -y pip
 
+# for opencv
+RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
+
 # Install other tools
 RUN apt install -y \
     wget \
@@ -48,3 +51,5 @@ RUN pip install -r /tmp/requirements.txt \
 # Install a specific version of alf (dependencies should have been installed above)
 RUN pip install --no-deps \
     "alf @ git+https://github.com/HorizonRobotics/alf@hobot_01052023#egg=ALF"
+
+RUN pip install --upgrade protobuf==3.20.1
