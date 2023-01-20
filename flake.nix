@@ -37,7 +37,7 @@
               openssl
               openssh
               curl
-              clang-format
+              clang-tools
 
               (python3.withPackages (pyPkgs: with pyPkgs; [
                 alf-cpu
