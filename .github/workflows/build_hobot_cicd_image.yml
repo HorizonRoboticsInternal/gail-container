@@ -32,5 +32,5 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - uses cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v18
       - run: nix --version
