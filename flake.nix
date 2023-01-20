@@ -30,29 +30,29 @@
             paths = with pkgs; [
               bash
               git
-              iputils
-              coreutils
-              findutils
-              fd
-              openssl
-              openssh
-              curl
-              clang-format
+              # iputils
+              # coreutils
+              # findutils
+              # fd
+              # openssl
+              # openssh
+              # curl
+              # clang-format
 
-              (python3.withPackages (pyPkgs: with pyPkgs; [
-                alf-cpu
+              # (python3.withPackages (pyPkgs: with pyPkgs; [
+              #   alf-cpu
 
-                # Utils
-                numpy-quaternion
+              #   # Utils
+              #   numpy-quaternion
 
-                # Simulators
-                mujoco-pybind
-                dm-control
+              #   # Simulators
+              #   mujoco-pybind
+              #   dm-control
 
-                # Deveopment Tools
-                yapf
-                pylint
-                pre-commit
+              #   # Deveopment Tools
+              #   yapf
+              #   pylint
+              #   pre-commit
               ]))
             ];
             pathsToLink = [ "/bin" ];

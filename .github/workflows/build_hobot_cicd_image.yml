@@ -33,4 +33,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - uses: cachix/install-nix-action@v18
-      - run: nix --version
+      - name: Build the Image
+        run: nix build .#hobot-cicd --experimental-features 'nix-command flakes'
+      - run: ls -lh ./result
