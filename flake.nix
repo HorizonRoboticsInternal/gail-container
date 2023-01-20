@@ -17,20 +17,28 @@
           config.allowUnfree = true;
           overlays = [
             inputs.alf-devenv.overlays.hobot
-          ];            
+          ];
         };
     in {
       packages = {
         hobot-cicd = pkgs.dockerTools.buildImage {
           name = "hobot-cicd";
           tag = "latest";
-          
+
           copyToRoot = pkgs.buildEnv {
             name = "root-environment";
             paths = with pkgs; [
               bash
-              coreutils
               git
+              iputils
+              coreutils
+              findutils
+              fd
+              openssl
+              openssh
+              curl
+              clang-format
+
               (python3.withPackages (pyPkgs: with pyPkgs; [
                 alf-cpu
 
@@ -50,7 +58,13 @@
             pathsToLink = [ "/bin" ];
           };
 
-          config.Cmd = [ "/bin/bash" ];
+          config = {
+            Cmd = [ "/bin/bash" ];
+            Env = [
+              "GIT_SSL_CAINFO=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+              "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+            ];
+          };
         };
       };
     });
