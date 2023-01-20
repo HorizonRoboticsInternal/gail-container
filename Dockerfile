@@ -50,6 +50,6 @@ RUN pip install -r /tmp/requirements.txt \
 
 # Install a specific version of alf (dependencies should have been installed above)
 RUN pip install --no-deps \
-    "alf @ git+https://github.com/HorizonRobotics/alf@hobot_01052023#egg=ALF"
+    "alf @ git+https://github.com/HorizonRobotics/alf@hobot_01202023#egg=ALF"
 
 RUN pip install --upgrade protobuf==3.20.1
