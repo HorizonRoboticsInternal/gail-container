@@ -53,7 +53,7 @@
               #   yapf
               #   pylint
               #   pre-commit
-              ]))
+              # ]))
             ];
             pathsToLink = [ "/bin" ];
           };
