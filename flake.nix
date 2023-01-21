@@ -38,6 +38,12 @@
               openssh
               curl
               clang-tools
+              nodejs
+
+              dockerTools.usrBinEnv
+              dockerTools.binSh
+              dockerTools.caCertificates
+              dockerTools.fakeNss
 
               (python3.withPackages (pyPkgs: with pyPkgs; [
                 alf-cpu
