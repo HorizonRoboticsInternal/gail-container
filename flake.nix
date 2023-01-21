@@ -24,6 +24,7 @@
         hobot-cicd = pkgs.dockerTools.buildImage {
           name = "hobot-cicd";
           tag = "latest";
+          created = "now";
 
           copyToRoot = pkgs.buildEnv {
             name = "root-environment";
