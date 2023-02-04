@@ -26,6 +26,7 @@ RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
 
 # Install other tools
 RUN apt install -y \
+    curl \
     wget \
     git \
     libsm6  \
@@ -42,6 +43,10 @@ RUN apt install -y \
 
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
+
+# For some reason, we need to manually delete the existing old setuptools version
+RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
+RUN pip install setuptools==63.1.0
 
 # Install pacakges from requirements.txt
 COPY hobot_cicd/requirements.txt  /tmp/requirements.txt
