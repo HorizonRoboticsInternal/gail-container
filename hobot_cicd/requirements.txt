@@ -22,6 +22,7 @@ procgen==0.10.7
 psutil
 pybullet==3.2.5
 pyglet==1.3.2  # higher version breaks classic control renderi
+pyfcl@git+https://github.com/hnyu/python-fcl.git
 rectangle-packer==2.0.0
 tensorboard==2.6.0
 # We should skip torch 1.12.1 as it conflicts with dm_control
