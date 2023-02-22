@@ -20,11 +20,21 @@
           ];
         };
     in {
-      packages = {
+      packages = rec {
+        ubuntu = pkgs.dockerTools.pullImage {
+          imageName = "ubuntu";
+          finalImageName = "ubuntu";
+          imageDigest = "sha256:27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9";
+          sha256 = "27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9";
+          finalImageTag = "22.04";
+          os = "linux";
+          arch = "x86_64";
+        };
         hobot-cicd = pkgs.dockerTools.buildImage {
           name = "hobot-cicd";
           tag = "latest";
           created = "now";
+          fromImage = ubuntu;
 
           copyToRoot = pkgs.buildEnv {
             name = "root-environment";
@@ -33,8 +43,7 @@
               git
               iputils
               coreutils
-              findutils
-              fd
+              gnugrep
               openssl
               openssh
               curl
@@ -64,6 +73,13 @@
             ];
             pathsToLink = [ "/bin" ];
           };
+
+          runAsRoot = ''
+            #!${pkgs.runtimeShell}
+            mkdir -p /etc
+            touch /etc/os-release
+            echo "ID=nixos" >> /etc/os-release
+          '';
 
           config = {
             Cmd = [ "/bin/bash" ];
