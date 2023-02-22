@@ -3,6 +3,7 @@ mujoco>=2.1.2
 dm_control
 numpy-quaternion
 pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git
+jinja2
 
 # Alf Dependencies
 atari_py==0.2.9
