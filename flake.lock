@@ -7,17 +7,17 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1674251434,
-        "narHash": "sha256-MaDeuPP8FF07nxDz2nq79QzZ0o6gfmHWPOMYb3p1uJc=",
+        "lastModified": 1677545380,
+        "narHash": "sha256-yXfqqRzRtaRvy0n/0lvxEeWBH7JeKj82vF/6AIbPakE=",
         "owner": "HorizonRobotics",
         "repo": "alf",
-        "rev": "fca6aa84108debe06584b1a6fa2e6ab15c31f207",
+        "rev": "8d56eb259c0d4bd4315dc53283b8da86811c27a8",
         "type": "github"
       },
       "original": {
         "owner": "HorizonRobotics",
         "repo": "alf",
-        "rev": "fca6aa84108debe06584b1a6fa2e6ab15c31f207",
+        "rev": "8d56eb259c0d4bd4315dc53283b8da86811c27a8",
         "type": "github"
       }
     },
@@ -29,14 +29,15 @@
           "nixpkgs"
         ],
         "tensor-splines": "tensor-splines_2",
-        "utils": "utils_3"
+        "unitree-go1-sdk": "unitree-go1-sdk",
+        "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1674252488,
-        "narHash": "sha256-qlDHx2vrrPdpWEM/fmzaGtlWAalh/3YjnliNMeS+htY=",
+        "lastModified": 1677545690,
+        "narHash": "sha256-RcOCXNIPyAHz3tAJke1OxKFd6OyoemzhNiO/vi6hRWw=",
         "owner": "HorizonRobotics",
         "repo": "alf-nix-devenv",
-        "rev": "8ba4318e707d17fe4047c68c8b3dd398bd1e6a66",
+        "rev": "df4a00e22325e1dc17b712ade0cb74a959a72f60",
         "type": "github"
       },
       "original": {
@@ -142,11 +143,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1674064358,
-        "narHash": "sha256-DV5UrNfdfTRyPyGeyP7KiOnaTC1Cz7gNrq95IeBgsp4=",
+        "lastModified": 1675474731,
+        "narHash": "sha256-D3W2MeG1ksFMYMYeDB7Ut7Up/I+yZ/3B/bNwzp8ld5s=",
         "owner": "nixvital",
         "repo": "ml-pkgs",
-        "rev": "e73baaa7dc4aa6a700891fa3675a6b5be9abc9b1",
+        "rev": "e65c2192df1f1025cc54127b911711c315b86b03",
         "type": "github"
       },
       "original": {
@@ -200,6 +201,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1669833724,
+        "narHash": "sha256-/HEZNyGbnQecrgJnfE8d0WC5c1xuPSD2LUpB6YXlg4c=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4d2b37a84fad1091b9de401eb450aae66f1a741e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1671122953,
         "narHash": "sha256-SVWmiyX2wx6BAxo4zMfRqDgFoWf4d3Vx1MgG/Vo4jL4=",
         "owner": "NixOS",
@@ -217,8 +234,8 @@
     "root": {
       "inputs": {
         "alf-devenv": "alf-devenv",
-        "nixpkgs": "nixpkgs_2",
-        "utils": "utils_4"
+        "nixpkgs": "nixpkgs_3",
+        "utils": "utils_5"
       }
     },
     "tensor-splines": {
@@ -279,6 +296,25 @@
         "url": "ssh://git@github.com/HorizonRobotics/tensor-splines"
       }
     },
+    "unitree-go1-sdk": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "utils": "utils_3"
+      },
+      "locked": {
+        "lastModified": 1677276953,
+        "narHash": "sha256-uf9T+H8plDW59mEYjzIyhShmCRuUySj1tooVeEn4sjY=",
+        "ref": "refs/heads/main",
+        "rev": "e9575cd060929dc6c8f8c01bac3cf4ae1e2df43f",
+        "revCount": 54,
+        "type": "git",
+        "url": "ssh://git@github.com/HorizonRoboticsInternal/unitree-go1-sdk"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/HorizonRoboticsInternal/unitree-go1-sdk"
+      }
+    },
     "utils": {
       "locked": {
         "lastModified": 1623875721,
@@ -311,6 +347,21 @@
     },
     "utils_3": {
       "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_4": {
+      "locked": {
         "lastModified": 1623875721,
         "narHash": "sha256-A8BU7bjS5GirpAUv4QA+QnJ4CceLHkcXdRp4xITDB0s=",
         "owner": "numtide",
@@ -324,7 +375,7 @@
         "type": "github"
       }
     },
-    "utils_4": {
+    "utils_5": {
       "locked": {
         "lastModified": 1667395993,
         "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",

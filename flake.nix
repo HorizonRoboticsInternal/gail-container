@@ -19,8 +19,15 @@
             inputs.alf-devenv.overlays.hobot
           ];
         };
+
+        images = pkgs.callPackage ./nix/dockers {
+          inherit (pkgs.dockerTools) buildImage buildLayeredIamge caCertificates
+            binSh usrBinEnv fakeNss;
+        };
     in {
       packages = {
+        inherit (images) barebone hobotWithCuda;
+          
         hobot-cicd = pkgs.dockerTools.buildImage {
           name = "hobot-cicd";
           tag = "latest";
