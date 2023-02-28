@@ -13,9 +13,9 @@
 # limitations under the License.
 
 # For lower nvidia driver <470
-ARG CUDA_BASE=nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
+#ARG CUDA_BASE=nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 # For higher nvidia driver >=470
-#FROM nvidia/cuda:11.4.0-cudnn8-devel-ubuntu20.04
+ARG CUDA_BASE=nvidia/cuda:11.4.0-cudnn8-devel-ubuntu20.04
 
 ######################## Build Vulkan #################################
 FROM ubuntu:20.04 as vulkan-khronos
@@ -111,22 +111,24 @@ RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
 
-# Clean up to make the resulting image smaller
-RUN  rm -rf /var/lib/apt/lists/*
-
-# For some reason, we need to manually delete the existing old setuptools version
-RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
-RUN pip install setuptools==63.1.0
+# Install the latest version of alf
+RUN pip install alf@git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF
 
 # Install pacakges from requirements.txt
 COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
-# Install a specific version of alf (dependencies should have been installed above)
-RUN pip install --no-deps \
-    "alf @ git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF"
+# Test cnest
+RUN pip --version
+RUN python -c "import cnest"
 
 RUN pip install --upgrade protobuf==3.20.1
 
+# Enable EGL
 ENV PYOPENGL_PLATFORM=egl
+RUN python -c "from OpenGL.raw.EGL._types import *"
+# Enable determinism for pytorch
 ENV CUBLAS_WORKSPACE_CONFIG=:4096:8
+
+# Clean up to make the resulting image smaller
+RUN  rm -rf /var/lib/apt/lists/*
