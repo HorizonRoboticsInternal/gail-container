@@ -49,7 +49,7 @@ RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
 RUN pip install setuptools==63.1.0
 
 # Install pacakges from requirements.txt
-COPY hobot_cicd/requirements.txt  /tmp/requirements.txt
+COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
 

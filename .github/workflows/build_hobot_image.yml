@@ -32,12 +32,19 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Prepare docker release tag
+        id: prep_tag
+        run: TAG=`printf "${{ steps.meta.outputs.tags }}" | sed '1p;d'` && echo "::set-output name=tag::${TAG}"
+
+      - name: Check the docker tag
+        run: echo ${{ steps.prep_tag.outputs.tag }}
+
       - name: Build and push Hobot CUDA image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./hobot
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.prep_tag.outputs.tag }}-hobot
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Hobot CICD image
@@ -45,5 +52,5 @@ jobs:
         with:
           context: ./hobot_cicd
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.prep_tag.outputs.tag }}-hobot-cicd
           labels: ${{ steps.meta.outputs.labels }}
