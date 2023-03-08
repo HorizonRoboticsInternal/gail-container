@@ -54,7 +54,7 @@
               dockerTools.fakeNss
 
               (python3.withPackages (pyPkgs: with pyPkgs; [
-                alf-cpu
+                # alf-cpu
 
                 # Utils
                 numpy-quaternion

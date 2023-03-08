@@ -38,8 +38,11 @@ rec {
     copyToRoot = pkgs.buildEnv {
       name = "image-root";
       paths = with pkgs; [
+        cudaPackages_11_8.cudatoolkit
+        linuxPackages.nvidia_x11          
+        
         (python3.withPackages (pyPkgs: with pyPkgs; [
-          alf
+          # alf
           
           # Utils
           numpy-quaternion
