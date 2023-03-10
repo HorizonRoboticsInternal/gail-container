@@ -3,6 +3,7 @@ mujoco>=2.1.2
 dm_control
 numpy-quaternion
 pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git
+scikit-image
 
 # Tools
 pydocstyle==4.0.0
@@ -11,7 +12,6 @@ yapf==0.28.0
 pre-commit
 
 ## upgrade Alf Dependencies
-cnest==1.1.0
 # numpy 1.24 will report 'TypeError: No loop matching the specified signature and casting was found for ufunc greater'
 numpy==1.21
 # We should skip torch 1.12.1 as it conflicts with dm_control
