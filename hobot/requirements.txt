@@ -14,13 +14,4 @@ pre-commit
 ## upgrade Alf Dependencies
 # numpy 1.24 will report 'TypeError: No loop matching the specified signature and casting was found for ufunc greater'
 numpy==1.21
-# We should skip torch 1.12.1 as it conflicts with dm_control
-#-f https://download.pytorch.org/whl/torch_stable.html
-#torch==1.8.1+cu111
-#torchvision==0.9.1+cu111
-#torchtext==0.9.1
-# if using cuda 11.3
---extra-index-url https://download.pytorch.org/whl/cu113
-torch==1.11
-torchvision==0.12.0
-torchtext==0.12.0
+
