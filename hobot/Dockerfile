@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libx11-xcb-dev \
     libxkbcommon-dev \
     libxrandr-dev \
+    libboost-all-dev \
     python3 \
     python3-distutils \
     curl wget && \
