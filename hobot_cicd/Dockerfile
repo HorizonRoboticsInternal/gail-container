@@ -22,7 +22,7 @@ RUN ln -sf /usr/bin/python3 /usr/bin/python
 RUN apt install -y pip
 
 # for opencv
-RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
+RUN apt-get install -y gcc libglib2.0-0 libsm6 libxrender1 libxext6 libboost-all-dev
 
 # Install other tools
 RUN apt install -y \

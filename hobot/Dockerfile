@@ -27,7 +27,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
     cmake \
+    gcc \
     git \
+    libboost-all-dev \
     libegl1-mesa-dev \
     libwayland-dev \
     libx11-xcb-dev \
