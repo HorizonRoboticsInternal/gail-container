@@ -23,13 +23,14 @@ FROM ubuntu:20.04 as vulkan-khronos
 ENV TZ=US/Pacific
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN apt install libboost-all-dev
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
     cmake \
     gcc \
     git \
-    libboost-all-dev \
     libegl1-mesa-dev \
     libwayland-dev \
     libx11-xcb-dev \

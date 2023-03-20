@@ -21,8 +21,11 @@ RUN apt install -y python3  # This is python 3.10 in ubuntu 22.04
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 RUN apt install -y pip
 
+# for boost
+RUN apt install libboost-all-dev
+
 # for opencv
-RUN apt-get install -y gcc libglib2.0-0 libsm6 libxrender1 libxext6 libboost-all-dev
+RUN apt-get install -y gcc libglib2.0-0 libsm6 libxrender1 libxext6
 
 locate boost
 
