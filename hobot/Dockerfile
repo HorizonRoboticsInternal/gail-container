@@ -23,8 +23,6 @@ FROM ubuntu:20.04 as vulkan-khronos
 ENV TZ=US/Pacific
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt install -y libboost-all-dev
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
@@ -114,6 +112,9 @@ RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
 
+
+# for boost
+RUN apt install -y libboost-all-dev
 # Install the latest version of alf
 RUN pip install alf@git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF --extra-index-url https://download.pytorch.org/whl/cu113
 
