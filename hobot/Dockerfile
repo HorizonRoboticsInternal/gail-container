@@ -27,7 +27,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
     cmake \
-    gcc \
     git \
     libegl1-mesa-dev \
     libwayland-dev \
@@ -38,6 +37,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-distutils \
     curl wget && \
     rm -rf /var/lib/apt/lists/*
+
+
 
 ARG VULKAN_VERSION=sdk-1.1.121.0
 
@@ -111,6 +112,7 @@ RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
 
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
+
 
 
 # for boost
