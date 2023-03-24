@@ -53,8 +53,4 @@ COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
 
-# Install alf (dependencies should have been installed above)
-RUN pip install --no-deps \
-    "alf @ git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF"
-
 RUN pip install --upgrade protobuf==3.20.1
