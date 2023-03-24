@@ -1,5 +1,5 @@
 # Hobot Specific Dependencies
-mujoco>=2.1.2
+mujoco==2.3.1.post1
 dm_control
 numpy-quaternion
 pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git

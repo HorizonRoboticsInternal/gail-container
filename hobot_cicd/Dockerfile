@@ -20,6 +20,7 @@ RUN apt update
 RUN apt install -y python3  # This is python 3.10 in ubuntu 22.04
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 RUN apt install -y pip
+RUN apt install -y libboost-all-dev
 
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
@@ -52,9 +53,5 @@ RUN pip install setuptools==63.1.0
 COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
-
-# Install alf (dependencies should have been installed above)
-RUN pip install --no-deps \
-    "alf @ git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF"
 
 RUN pip install --upgrade protobuf==3.20.1
