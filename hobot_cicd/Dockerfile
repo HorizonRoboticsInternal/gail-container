@@ -20,6 +20,7 @@ RUN apt update
 RUN apt install -y python3  # This is python 3.10 in ubuntu 22.04
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 RUN apt install -y pip
+RUN apt install -y libboost-all-dev
 
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
