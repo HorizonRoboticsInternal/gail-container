@@ -1,6 +1,6 @@
 # Hobot Specific Dependencies
-mujoco>=2.1.2
-dm_control
+mujoco==2.3.2
+dm_control==1.0.10
 numpy-quaternion
 pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git
 scikit-image
@@ -14,4 +14,4 @@ pre-commit
 ## upgrade Alf Dependencies
 # numpy 1.24 will report 'TypeError: No loop matching the specified signature and casting was found for ufunc greater'
 numpy==1.21
-
+pybind11==2.10.4
