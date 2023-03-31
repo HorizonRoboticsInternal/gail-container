@@ -1,12 +1,13 @@
 # Hobot Specific Dependencies
-mujoco>=2.1.2
-dm_control
+mujoco==2.3.2
+dm_control==1.0.10
 numpy-quaternion
 pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git
 jinja2
 scikit-image
 
 # Alf Dependencies
+pybind11==2.10.4
 atari_py==0.2.9
 box2d-py
 cpplint
