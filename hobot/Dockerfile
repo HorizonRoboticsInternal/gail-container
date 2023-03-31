@@ -102,7 +102,8 @@ RUN apt update && apt install -y --no-install-recommends \
     dirmngr gnupg2 lsb-release \
     xvfb kmod swig patchelf ffmpeg rsync \
     libopenmpi-dev libcups2-dev libssl-dev \
-    python3.8 python3-pip python3.8-dev python3-setuptools
+    python3.8 python3-pip python3.8-dev python3-setuptools \
+    libboost-all-dev
 
 RUN python3.8 -m pip install --upgrade pip
 RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
