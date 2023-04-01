@@ -115,6 +115,8 @@ RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
 # Install the latest version of alf
 RUN pip install alf@git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF --extra-index-url https://download.pytorch.org/whl/cu113
 
+# need the following for python-fcl in requiremeents.txt
+RUN apt-get install -y liboctomap-dev libfcl-dev
 # Install pacakges from requirements.txt
 COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
