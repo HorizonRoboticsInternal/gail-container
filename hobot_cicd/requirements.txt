@@ -6,6 +6,7 @@ pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git
 jinja2
 scikit-image
 pygame
+webcolors
 
 # Alf Dependencies
 atari_py==0.2.9
