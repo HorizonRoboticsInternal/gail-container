@@ -11,6 +11,8 @@ pydocstyle==4.0.0
 pylint==2.3.1
 yapf==0.28.0
 pre-commit
+moviepy
+imageio==2.27.0
 
 numpy==1.23
 pybind11==2.10.4
