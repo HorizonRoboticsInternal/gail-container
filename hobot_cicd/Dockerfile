@@ -17,7 +17,7 @@ FROM ubuntu:22.04
 RUN apt update
 
 # Prepare the global python environment
-RUN apt install -y python3  # This is python 3.10 in ubuntu 22.04
+RUN apt install -y python3
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 RUN apt install -y pip
 RUN apt install -y libboost-all-dev libglu1 ffmpeg
@@ -41,6 +41,8 @@ RUN apt install -y \
     libopenmpi-dev  libcups2-dev \
     libssl-dev  libosmesa6-dev \
     mesa-utils
+
+RUN apt-get install -y liboctomap-dev libfcl-dev
 
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
