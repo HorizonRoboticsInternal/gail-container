@@ -15,7 +15,7 @@
 # For lower nvidia driver <470
 #ARG CUDA_BASE=nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 # For higher nvidia driver >=470
-ARG CUDA_BASE=nvidia/cuda:11.4.0-cudnn8-devel-ubuntu20.04
+ARG CUDA_BASE=nvidia/cuda:11.4.3-cudnn8-devel-ubuntu20.04
 
 ######################## Build Vulkan #################################
 FROM ubuntu:20.04 as vulkan-khronos

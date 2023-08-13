@@ -5,6 +5,7 @@ numpy-quaternion
 python-fcl==0.7.0.4
 scikit-image
 webcolors
+LIV-robotics==0.1.2
 
 # Tools
 pydocstyle==4.0.0
