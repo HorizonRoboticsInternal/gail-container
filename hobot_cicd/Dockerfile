@@ -24,7 +24,7 @@ RUN apt install -y libboost-all-dev libglu1 ffmpeg
 
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
-RUN apt-get install clang-format
+RUN apt-get install -y clang-format
 
 # Install other tools
 RUN apt install -y \
