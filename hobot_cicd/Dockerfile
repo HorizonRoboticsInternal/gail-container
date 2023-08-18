@@ -57,3 +57,5 @@ RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN pip install --upgrade protobuf==3.20.1
+
+RUN apt install -y clang-format
