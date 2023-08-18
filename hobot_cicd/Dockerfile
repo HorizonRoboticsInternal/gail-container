@@ -39,7 +39,8 @@ RUN apt install -y \
     xvfb kmod swig patchelf \
     libopenmpi-dev  libcups2-dev \
     libssl-dev  libosmesa6-dev \
-    mesa-utils
+    mesa-utils \
+    clang-format
 
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
