@@ -45,9 +45,6 @@ RUN apt install -y \
 
 RUN apt-get install -y liboctomap-dev libfcl-dev
 
-# Clean up to make the resulting image smaller
-RUN  rm -rf /var/lib/apt/lists/*
-
 # For some reason, we need to manually delete the existing old setuptools version
 RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
 RUN pip install setuptools==63.1.0
@@ -58,3 +55,8 @@ RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN pip install --upgrade protobuf==3.20.1
+
+# Clean up to make the resulting image smaller
+RUN  rm -rf /var/lib/apt/lists/*
+
+# ---------- Do not attemp running apt commands after this ----------
