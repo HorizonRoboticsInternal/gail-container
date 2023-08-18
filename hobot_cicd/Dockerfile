@@ -24,6 +24,7 @@ RUN apt install -y libboost-all-dev libglu1 ffmpeg
 
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
+RUN apt-get install clang-format
 
 # Install other tools
 RUN apt install -y \
@@ -57,5 +58,3 @@ RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN pip install --upgrade protobuf==3.20.1
-
-RUN apt install -y clang-tools
