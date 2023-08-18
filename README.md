@@ -4,6 +4,8 @@ This reporsitory maintains a docker image for running CI/CD of Hobot and Alf (an
 
 The main implementation can be found at the top-level [Dockerfile](./Dockerfile).
 
+:exclamation: **NOTE:** Please note that there are two "for-release" branches, `main` and `hobot_cicd`. Releasing from `main` auto-builds docker images for deployment/training, while releasing from `hobot_cicd` on the other hand auto-builds docker images for CI/CD purpose.
+
 ## How to update the docker
 
 1. Update the [requirements.txt](./hobot_cicd/requirements.txt) and commit
