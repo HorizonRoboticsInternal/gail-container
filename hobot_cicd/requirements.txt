@@ -11,7 +11,6 @@ pybind11==2.10.4
 atari_py==0.2.9
 box2d-py
 cpplint
-clang-format==9.0
 fasteners
 gin-config@git+https://github.com/HorizonRobotics/gin-config.git
 gym==0.19.0
