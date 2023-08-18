@@ -58,4 +58,4 @@ RUN pip install -r /tmp/requirements.txt \
 
 RUN pip install --upgrade protobuf==3.20.1
 
-RUN apt install -y clang-format
+RUN apt install -y clang-tools
