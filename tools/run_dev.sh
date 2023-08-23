@@ -58,6 +58,7 @@ function run_docker() {
     # fi
 
     docker run --rm -d --name "${DEV_CONTAINER_NAME}" \
+           --gpus all \
            --user $UID:$GID \
            -v /etc/passwd:/etc/passwd:ro \
            -v /etc/group:/etc/group:ro \
