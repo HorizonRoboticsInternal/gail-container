@@ -42,6 +42,7 @@ RUN apt install -y \
     libopenmpi-dev  libcups2-dev \
     libssl-dev  libosmesa6-dev \
     mesa-utils
+RUN apt-get install -y --no-install-recommends build-essential
 
 RUN apt-get install -y liboctomap-dev libfcl-dev
 
