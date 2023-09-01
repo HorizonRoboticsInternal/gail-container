@@ -8,6 +8,8 @@ scikit-image
 pygame
 webcolors
 LIV-robotics==0.1.2
+wget
+xmltodict
 
 # Alf Dependencies
 atari_py==0.2.9
