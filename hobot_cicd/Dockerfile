@@ -57,6 +57,9 @@ RUN pip install -r /tmp/requirements.txt \
 
 RUN pip install --upgrade protobuf==3.20.1
 
+# gtest/gmock for running c++ unit tests
+RUN apt-get install libgmock-dev
+
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
 
