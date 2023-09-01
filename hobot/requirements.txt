@@ -6,6 +6,8 @@ python-fcl==0.7.0.4
 scikit-image
 webcolors
 LIV-robotics==0.1.5
+wget
+xmltodict
 
 # Tools
 pydocstyle==4.0.0
