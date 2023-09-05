@@ -130,5 +130,8 @@ RUN python -c "from OpenGL.raw.EGL._types import *"
 # Enable determinism for pytorch
 ENV CUBLAS_WORKSPACE_CONFIG=:4096:8
 
+# gtest/gmock for running c++ unit tests
+RUN apt-get install -y libgmock-dev
+
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
