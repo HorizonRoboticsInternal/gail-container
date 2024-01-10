@@ -8,6 +8,8 @@ webcolors
 LIV-robotics==0.1.5
 wget
 xmltodict
+wandb
+triton
 
 # Tools
 pydocstyle==4.0.0
