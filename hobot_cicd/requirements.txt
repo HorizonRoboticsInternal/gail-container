@@ -48,3 +48,4 @@ loguru
 websocket
 fastapi
 uvicorn
+open3d
