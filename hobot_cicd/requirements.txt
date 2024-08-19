@@ -36,6 +36,8 @@ torch==2.1.1+cpu
 torchvision==0.16.1+cpu
 torchtext>=0.16.0
 cnest
+onnx>=1.13
+onnxruntime<1.16 # CPU
 
 # Tools
 pydocstyle==4.0.0

@@ -51,12 +51,14 @@ RUN apt-get install -y liboctomap-dev libfcl-dev
 RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
 RUN pip install setuptools==63.1.0
 
+RUN pip install --upgrade protobuf==3.20.2
+RUN apt install -y protobuf-compiler
+RUN pip install pybind11==2.10.4
+
 # Install pacakges from requirements.txt
 COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
-
-RUN pip install --upgrade protobuf==3.20.1
 
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
