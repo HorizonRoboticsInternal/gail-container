@@ -6,7 +6,7 @@ python-fcl
 jinja2
 scikit-image
 pygame
-webcolors
+webcolors==1.13
 LIV-robotics==0.1.2
 wget
 xmltodict
