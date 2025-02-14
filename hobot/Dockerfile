@@ -18,7 +18,8 @@
 ARG CUDA_BASE=nvidia/cuda:11.4.3-cudnn8-devel-ubuntu20.04
 
 ######################## Build Vulkan #################################
-FROM ubuntu:20.04 as vulkan-khronos
+# as vulkan-khronos
+FROM ubuntu:20.04
 
 ENV TZ=US/Pacific
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -38,20 +39,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl wget && \
     rm -rf /var/lib/apt/lists/*
 
-ARG VULKAN_VERSION=sdk-1.1.121.0
+#ARG VULKAN_VERSION=sdk-1.1.121.0
 
 # Download and compile vulkan components
-RUN ln -s /usr/bin/python3 /usr/bin/python && \
-    git clone https://github.com/KhronosGroup/Vulkan-ValidationLayers.git /opt/vulkan && \
-    cd /opt/vulkan && git checkout "${VULKAN_VERSION}" && \
-    mkdir build && cd build && ../scripts/update_deps.py && \
-    cmake -C helper.cmake -DCMAKE_BUILD_TYPE=Release .. && \
-    cmake --build . && make install && ldconfig && \
-    mkdir -p /usr/local/lib && cp -a Vulkan-Loader/build/install/lib/* /usr/local/lib && \
-    mkdir -p /usr/local/include/vulkan && cp -r Vulkan-Headers/build/install/include/vulkan/* /usr/local/include/vulkan && \
-    mkdir -p /usr/local/share/vulkan/registry && \
-    cp -r Vulkan-Headers/build/install/share/vulkan/registry/* /usr/local/share/vulkan/registry && \
-    rm -rf /opt/vulkan
+#RUN ln -s /usr/bin/python3 /usr/bin/python && \
+#    git clone https://github.com/KhronosGroup/Vulkan-ValidationLayers.git /opt/vulkan && \
+#    cd /opt/vulkan && git checkout "${VULKAN_VERSION}" && \
+#    mkdir build && cd build && ../scripts/update_deps.py && \
+#    cmake -C helper.cmake -DCMAKE_BUILD_TYPE=Release .. && \
+#    cmake --build . && make install && ldconfig && \
+#    mkdir -p /usr/local/lib && cp -a Vulkan-Loader/build/install/lib/* /usr/local/lib && \
+#    mkdir -p /usr/local/include/vulkan && cp -r Vulkan-Headers/build/install/include/vulkan/* /usr/local/include/vulkan && \
+#    mkdir -p /usr/local/share/vulkan/registry && \
+#    cp -r Vulkan-Headers/build/install/share/vulkan/registry/* /usr/local/share/vulkan/registry && \
+#    rm -rf /opt/vulkan
 
 FROM ${CUDA_BASE}
 
@@ -85,11 +86,11 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
     libxrandr-dev \
     libegl1-mesa-dev
 
-COPY --from=vulkan-khronos /usr/local/bin /usr/local/bin
-COPY --from=vulkan-khronos /usr/local/lib /usr/local/lib
-COPY --from=vulkan-khronos /usr/local/include/vulkan /usr/local/include/vulkan
-COPY --from=vulkan-khronos /usr/local/share/vulkan /usr/local/share/vulkan
-COPY ./nvidia_icd.json /etc/vulkan/icd.d/nvidia_icd.json
+#COPY --from=vulkan-khronos /usr/local/bin /usr/local/bin
+#COPY --from=vulkan-khronos /usr/local/lib /usr/local/lib
+#COPY --from=vulkan-khronos /usr/local/include/vulkan /usr/local/include/vulkan
+#COPY --from=vulkan-khronos /usr/local/share/vulkan /usr/local/share/vulkan
+#COPY ./nvidia_icd.json /etc/vulkan/icd.d/nvidia_icd.json
 COPY ./10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
 
 ######################## Hobot dependencies #####################
@@ -112,8 +113,7 @@ RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
 
-# Install the latest version of alf
-RUN pip install alf@git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF --extra-index-url https://download.pytorch.org/whl/cu113
+RUN pip install torch==2.1.1 torchvision==0.16.1 --extra-index-url https://download.pytorch.org/whl/cu118
 
 # need the following for python-fcl in requiremeents.txt
 RUN apt-get install -y liboctomap-dev libfcl-dev
