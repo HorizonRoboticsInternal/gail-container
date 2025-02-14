@@ -10,6 +10,14 @@ webcolors==1.13
 LIV-robotics==0.1.2
 wget
 xmltodict
+# Hobot2
+zmq
+fastapi
+uvicorn
+loguru
+click
+mediapy
+websocket
 
 # Alf Dependencies
 atari_py==0.2.9
