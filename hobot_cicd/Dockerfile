@@ -45,7 +45,7 @@ RUN apt install -y \
     mesa-utils
 RUN apt-get install -y --no-install-recommends build-essential
 
-RUN apt-get install -y liboctomap-dev libfcl-dev
+RUN apt-get install -y liboctomap-dev libfcl-dev libeigen3-dev pybind11-dev
 
 # For some reason, we need to manually delete the existing old setuptools version
 RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
@@ -59,6 +59,7 @@ RUN pip install pybind11==2.10.4
 COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt \
     --extra-index-url https://download.pytorch.org/whl/cpu
+
 
 # Clean up to make the resulting image smaller
 RUN  rm -rf /var/lib/apt/lists/*
