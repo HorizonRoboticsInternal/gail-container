@@ -15,11 +15,11 @@
 # For lower nvidia driver <470
 #ARG CUDA_BASE=nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 # For higher nvidia driver >=470
-ARG CUDA_BASE=nvidia/cuda:11.4.3-cudnn8-devel-ubuntu20.04
+ARG CUDA_BASE=nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 
 ######################## Build Vulkan #################################
 # as vulkan-khronos
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ENV TZ=US/Pacific
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -103,12 +103,12 @@ RUN apt update && apt install -y --no-install-recommends \
     dirmngr gnupg2 lsb-release \
     xvfb kmod swig patchelf ffmpeg rsync \
     libopenmpi-dev libcups2-dev libssl-dev \
-    python3.8 python3-pip python3.8-dev python3-setuptools \
+    python3 python3-pip python3-dev python3-setuptools \
     libboost-all-dev
 
-RUN python3.8 -m pip install --upgrade pip
-RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
-    && ln -sf /usr/bin/python3.8 /usr/bin/python3
+RUN python3 -m pip install --upgrade pip
+RUN ln -sf /usr/bin/python3 /usr/bin/python \
+    && ln -sf /usr/bin/python3.10 /usr/bin/python3
 
 # for opencv
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
@@ -117,9 +117,21 @@ RUN pip install torch==2.1.1 torchvision==0.16.1 --extra-index-url https://downl
 
 # need the following for python-fcl in requiremeents.txt
 RUN apt-get install -y liboctomap-dev libfcl-dev
+
+# Install Rust and Cargo. Needed for building transformers from source
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+RUN pip install Cython==0.29.33
+
 # Install pacakges from requirements.txt
 COPY ./requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
+
+# Recent VLMs need up-to-date transformers repo, which in turn, needs
+# at least python3.10.
+RUN cd /root/ && git clone https://github.com/huggingface/transformers.git \
+    && cd transformers && pip install -e .
 
 # Test cnest
 RUN pip --version

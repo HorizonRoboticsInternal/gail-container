@@ -18,6 +18,10 @@ loguru
 click
 mediapy
 websocket
+# huggingface dependencies
+pynvml
+qwen_vl_utils
+peft
 
 # Tools
 pydocstyle==4.0.0
@@ -42,16 +46,13 @@ imageio==2.27.0
 click==8.1.7
 loguru==0.7.2
 
-numpy==1.23
-pybind11==2.10.4
-
 cpplint
 clang-format==9.0
 fasteners
 gin-config@git+https://github.com/HorizonRobotics/gin-config.git
 gym==0.15.4
 gym3==0.3.3
-h5py==3.5.0
+h5py==3.12.1
 matplotlib==3.4.1
 numba==0.58.1
 opencv-python
