@@ -130,8 +130,10 @@ RUN pip install -r /tmp/requirements.txt
 
 # Recent VLMs need up-to-date transformers repo, which in turn, needs
 # at least python3.10.
-RUN cd /root/ && git clone https://github.com/huggingface/transformers.git \
+RUN cd /opt/ && git clone https://github.com/huggingface/transformers.git \
     && cd transformers && pip install -e .
+# make sure all other users can access this repo
+RUN chmod -R a+rx /opt/transformers
 
 # Test cnest
 RUN pip --version
