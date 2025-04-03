@@ -32,6 +32,7 @@ moviepy
 imageio==2.27.0
 click
 loguru
+selenium
 
 numpy==1.23
 pybind11==2.10.4
