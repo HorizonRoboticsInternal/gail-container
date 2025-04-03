@@ -59,3 +59,4 @@ websocket
 fastapi
 uvicorn
 open3d
+selenium
