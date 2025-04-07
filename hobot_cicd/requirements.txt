@@ -17,7 +17,8 @@ uvicorn
 loguru
 click
 mediapy
-websocket
+websocket-client
+selenium
 
 # Alf Dependencies
 atari_py==0.2.9
@@ -52,11 +53,4 @@ pydocstyle==4.0.0
 pylint==2.3.1
 yapf==0.28.0
 pre-commit
-mediapy==1.1.2
-click
-loguru
-websocket
-fastapi
-uvicorn
 open3d
-selenium
