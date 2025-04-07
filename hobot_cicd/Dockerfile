@@ -47,6 +47,12 @@ RUN apt-get install -y --no-install-recommends build-essential
 
 RUN apt-get install -y liboctomap-dev libfcl-dev libeigen3-dev pybind11-dev
 
+# Install Google Chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable
+
 # For some reason, we need to manually delete the existing old setuptools version
 RUN rm -rf /usr/lib/python3/dist-packages/setuptools*
 RUN pip install setuptools==63.1.0

@@ -130,3 +130,6 @@ dmypy.json
 
 # nix
 result
+
+# JetBrains IDE files
+.idea
