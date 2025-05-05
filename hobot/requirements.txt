@@ -1,18 +1,70 @@
-# Hobot Specific Dependencies
-mujoco>=2.1.2
-dm_control
-numpy-quaternion
-pyfcl@git+https://github.com/HorizonRoboticsInternal/python-fcl.git
-scikit-image
+# Alf dependencies
+absl-py==2.2.2
+atari_py==0.2.9
+box2d-py==2.3.8
+clang-format==17.0.6
+cnest@git+https://github.com/HorizonRobotics/cnest.git
+cpplint==2.0.1
+fasteners==0.19
+gin-config@git+https://github.com/HorizonRobotics/gin-config.git
+gym==0.15.4
+gym3==0.3.3
+h5py==3.13.0
+matplotlib==3.10.1
+numpy==1.26
+opencv-python==4.11.0.86
+pathos==0.3.3
+pillow>=8
+pre-commit==4.2.0
+protobuf==6.30.2
+psutil==7.0.0
+pybind11==2.13.6
+pybullet==2.5.0
+pylint==3.3.6
+pyglet==1.3.2
+rectangle-packer==2.0.4
+tensorboard==2.19.0
+threadpoolctl==3.6.0
 
-# Tools
-pydocstyle==4.0.0
-pylint==2.3.1
-yapf==0.28.0
-pre-commit
-selenium
+# Hobot dependencies
+click==8.1.8
+dm_control==1.0.28
+fastapi==0.115.12
+ffmpeg==1.4
+hydra-core==1.3.2
+jinja2==3.1.6
+loguru==0.7.3
+mediapy==1.2.2
+mujoco==3.3.0
+numpy-quaternion==2024.0.8
+open3d==0.19.0
+pygame==2.6.1
+python-fcl==0.7.0.8
+PyOpenGL-accelerate==3.1.9
+pyzmq==26.4.0
+questionary==2.1.0
+rich==14.0.0
+scikit-image==0.25.2
+selenium==4.31.0
+uvicorn==0.34.0
+webcolors==1.13
+websocket-client==1.8.0
+wget==3.2
+xmltodict==0.14.2
 
-## upgrade Alf Dependencies
-# numpy 1.24 will report 'TypeError: No loop matching the specified signature and casting was found for ufunc greater'
-numpy==1.21
-pybind11==2.10.4
+# ManiSkill dependencies
+dacite==1.9.2
+gymnasium==0.29.1
+transforms3d==0.4.2
+trimesh==4.6.8
+pytorch_kinematics==0.7.5
+huggingface_hub==0.30.2
+sapien>=3.0.0.b1
+
+# VLM finetuning dependencies
+transformers==4.51.3
+pynvml==12.0.0
+qwen_vl_utils==0.0.11
+peft==0.15.2
+requests==2.32.2
+moviepy==1.0.3

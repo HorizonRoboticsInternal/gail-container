@@ -1,10 +1,21 @@
 # gail-container
 
-This reporsitory maintains a docker image for running CI/CD of Hobot and Alf (and hopefully for other purposes in the future).
+This repository maintains a docker image for running CI/CD of Hobot and Alf (and hopefully for other purposes in the future).
 
 The main implementation can be found at the top-level [Dockerfile](./Dockerfile).
 
-## How to update the docker
+## How to update the docker on cluster
+
+Build the docker with the appropriate tag and save it.
+```bash
+cd hobot
+docker build -t horizonrobotics:cuda11.8-torch2.6-py3.12-ubuntu24.04 -f hobot_cluster.dockerfile .
+# When saving make sure to convert from ${REPO}:${TAG} to ${TAG}.tar format.
+docker save horizonrobotics:cuda11.8-torch2.6-py3.12-ubuntu24.04 -o cuda11.8-torch2.6-py3.12-ubuntu24.04.tar
+```
+Then simply upload the tar file to `/data/docker_images` on the cluster and `chmod 666` the file.
+
+## How to update the docker on CICD
 
 1. Update the [requirements.txt](./hobot_cicd/requirements.txt) and commit
 2. Create a [new release](https://github.com/HorizonRoboticsInternal/gail-container/releases/new) on GitHub.

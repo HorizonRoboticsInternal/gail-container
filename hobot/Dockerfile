@@ -1,59 +1,6 @@
-# Copyright (c) 2023 Horizon Robotics. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# For lower nvidia driver <470
-#ARG CUDA_BASE=nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
-# For higher nvidia driver >=470
-ARG CUDA_BASE=nvidia/cuda:11.4.0-cudnn8-devel-ubuntu20.04
-
-######################## Build Vulkan #################################
-FROM ubuntu:20.04 as vulkan-khronos
-
-ENV TZ=US/Pacific
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    ca-certificates \
-    cmake \
-    git \
-    libegl1-mesa-dev \
-    libwayland-dev \
-    libx11-xcb-dev \
-    libxkbcommon-dev \
-    libxrandr-dev \
-    python3 \
-    python3-distutils \
-    curl wget && \
-    rm -rf /var/lib/apt/lists/*
-
-ARG VULKAN_VERSION=sdk-1.1.121.0
-
-# Download and compile vulkan components
-RUN ln -s /usr/bin/python3 /usr/bin/python && \
-    git clone https://github.com/KhronosGroup/Vulkan-ValidationLayers.git /opt/vulkan && \
-    cd /opt/vulkan && git checkout "${VULKAN_VERSION}" && \
-    mkdir build && cd build && ../scripts/update_deps.py && \
-    cmake -C helper.cmake -DCMAKE_BUILD_TYPE=Release .. && \
-    cmake --build . && make install && ldconfig && \
-    mkdir -p /usr/local/lib && cp -a Vulkan-Loader/build/install/lib/* /usr/local/lib && \
-    mkdir -p /usr/local/include/vulkan && cp -r Vulkan-Headers/build/install/include/vulkan/* /usr/local/include/vulkan && \
-    mkdir -p /usr/local/share/vulkan/registry && \
-    cp -r Vulkan-Headers/build/install/share/vulkan/registry/* /usr/local/share/vulkan/registry && \
-    rm -rf /opt/vulkan
-
-FROM ${CUDA_BASE}
+FROM ubuntu:24.04
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
 
 ENV TZ=US/Pacific
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -63,6 +10,7 @@ RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf \
     && echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/usr/lib/i386-linux-gnu:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
+# Install GPU libraries and dependencies
 RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
     libxau6 libxau6:i386 \
     libxdmcp6 libxdmcp6:i386 \
@@ -82,19 +30,11 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
     libx11-xcb-dev \
     libxkbcommon-dev \
     libwayland-dev \
-    libxrandr-dev \
-    libegl1-mesa-dev
+    libxrandr-dev
 
-COPY --from=vulkan-khronos /usr/local/bin /usr/local/bin
-COPY --from=vulkan-khronos /usr/local/lib /usr/local/lib
-COPY --from=vulkan-khronos /usr/local/include/vulkan /usr/local/include/vulkan
-COPY --from=vulkan-khronos /usr/local/share/vulkan /usr/local/share/vulkan
-COPY ./nvidia_icd.json /etc/vulkan/icd.d/nvidia_icd.json
 COPY ./10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
 
-######################## Hobot dependencies #####################
-RUN apt update
-
+# Install build tools and Python dependencies
 RUN apt update && apt install -y --no-install-recommends \
     build-essential \
     vim tree curl wget unzip git cmake \
@@ -102,36 +42,61 @@ RUN apt update && apt install -y --no-install-recommends \
     dirmngr gnupg2 lsb-release \
     xvfb kmod swig patchelf ffmpeg rsync \
     libopenmpi-dev libcups2-dev libssl-dev \
-    python3.8 python3-pip python3.8-dev python3-setuptools
+    python3 python3-pip python3-dev python3-setuptools python3-venv \
+    libboost-all-dev \
+    libosmesa6-dev \
+    libglib2.0-0 \
+    libxrender1 \
+    libglew-dev \
+    xpra \
+    libglfw3-dev \
+    pybind11-dev \
+    libeigen3-dev \
+    liboctomap-dev \
+    libfcl-dev \
+    libjpeg-dev \
+    gnupg \
+    ca-certificates \
+    libsm6 libxext6 libxext-dev ninja-build
 
-RUN python3.8 -m pip install --upgrade pip
-RUN ln -sf /usr/bin/python3.8 /usr/bin/python \
-    && ln -sf /usr/bin/python3.8 /usr/bin/python3
+# Install Google Chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable
 
-# for opencv
-RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6 libxext-dev
+# Make Python 3 the default
+RUN ln -sf /usr/bin/python3 /usr/bin/python && \
+    ln -sf /usr/bin/pip3 /usr/bin/pip
 
-# Install the latest version of alf
-# RUN pip install alf@git+https://github.com/HorizonRobotics/alf@pytorch#egg=ALF --extra-index-url https://download.pytorch.org/whl/cu113
+# Create a working directory for the mounted volume
+WORKDIR /app
+RUN python3.12 -m venv /app/venv
 
-# Install pacakges from requirements.txt
-COPY ./requirements.txt  /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+# Need to run umask 0000 so relax permissions for venv so that Hobot can pip install kincpp and ManiSkill
 
-# Test cnest
-RUN pip --version
-RUN python -c "import cnest"
+RUN umask 0000 && /app/venv/bin/pip install --upgrade pip
 
-RUN pip install --upgrade protobuf==3.20.1
+# Install torch 2.6 + cuda 11.8
+RUN umask 0000 && /app/venv/bin/pip install torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu118
 
-# Enable EGL
+# Install all pip dependencies
+COPY requirements.txt /app/
+RUN umask 0000 && /app/venv/bin/pip install wheel
+RUN umask 0000 && /app/venv/bin/pip install -r /app/cluster_requirements.txt
+
+# Check for PyTorch with CUDA 11.8
+RUN /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu118' in version, f'Expected PyTorch with CUDA 11.8 (+cu118 suffix), but got version {version}'; sys.exit(0)"
+
 ENV PYOPENGL_PLATFORM=egl
-RUN python -c "from OpenGL.raw.EGL._types import *"
-# Enable determinism for pytorch
 ENV CUBLAS_WORKSPACE_CONFIG=:4096:8
 
-# gtest/gmock for running c++ unit tests
-RUN apt-get install -y libgmock-dev
-
 # Clean up to make the resulting image smaller
-RUN  rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/*
+
+# Setup the venv
+ENV PATH="/app/venv/bin:$PATH"
+ENV VIRTUAL_ENV="/app/venv"
+
+# Point to ManiSkill asset directory
+ENV MS_ASSET_DIR="/data"
