@@ -1,4 +1,8 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
+
+# Need to use 11.8 to support driver 470. Can upgrade once nvidia driver gets upgraded
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -30,9 +34,12 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
     libx11-xcb-dev \
     libxkbcommon-dev \
     libwayland-dev \
-    libxrandr-dev
+    libxrandr-dev \
+    libvulkan1
 
 COPY ./10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
+COPY ./nvidia_icd.json /usr/share/vulkan/icd.d/nvidia_icd.json
+COPY ./nvidia_layers.json /etc/vulkan/implicit_layer.d/nvidia_layers.json
 
 # Install build tools and Python dependencies
 RUN apt update && apt install -y --no-install-recommends \
@@ -71,7 +78,7 @@ RUN ln -sf /usr/bin/python3 /usr/bin/python && \
 
 # Create a working directory for the mounted volume
 WORKDIR /app
-RUN python3.12 -m venv /app/venv
+RUN python3.10 -m venv /app/venv
 
 # Need to run umask 0000 so relax permissions for venv so that Hobot can pip install kincpp and ManiSkill
 
@@ -99,4 +106,4 @@ ENV PATH="/app/venv/bin:$PATH"
 ENV VIRTUAL_ENV="/app/venv"
 
 # Point to ManiSkill asset directory
-ENV MS_ASSET_DIR="/data"
+ENV MS_ASSET_DIR="/data/.maniskill"
