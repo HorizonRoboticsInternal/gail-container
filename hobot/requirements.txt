@@ -68,3 +68,9 @@ qwen_vl_utils==0.0.11
 peft==0.15.2
 requests==2.32.2
 moviepy==1.0.3
+
+# OpenVLA dependencies
+accelerate==1.6.0
+flash_attn==2.7.3
+bitsandbytes==0.45.5
+timm==0.9.10
