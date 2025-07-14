@@ -53,6 +53,7 @@ wget==3.2
 xmltodict==0.14.2
 
 # ManiSkill dependencies
+coacd==1.0.7
 dacite==1.9.2
 gymnasium==0.29.1
 transforms3d==0.4.2

@@ -61,7 +61,7 @@ COPY requirements.txt /app/
 # Create venv and install all Python packages in one layer
 RUN umask 0000 && \
     python3.10 -m venv /app/venv && \
-    /app/venv/bin/pip install --upgrade pip wheel packaging && \
+    /app/venv/bin/pip install --upgrade pip wheel setuptools packaging && \
     /app/venv/bin/pip install torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu118 && \
     /app/venv/bin/pip install -r /app/requirements.txt && \
     /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu118' in version, f'Expected PyTorch with CUDA 11.8 (+cu118 suffix), but got version {version}'; sys.exit(0)" && \
