@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 
 # Environment setup
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -62,9 +62,11 @@ COPY requirements.txt /app/
 RUN umask 0000 && \
     python3.10 -m venv /app/venv && \
     /app/venv/bin/pip install --upgrade pip wheel setuptools packaging && \
-    /app/venv/bin/pip install torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu118 && \
+    /app/venv/bin/pip install torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu124 && \
     /app/venv/bin/pip install -r /app/requirements.txt && \
-    /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu118' in version, f'Expected PyTorch with CUDA 11.8 (+cu118 suffix), but got version {version}'; sys.exit(0)" && \
+    /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu124' in version, f'Expected PyTorch with CUDA 12.4 (+cu124 suffix), but got version {version}'; sys.exit(0)" && \
+    # Kaolin is required for EmbodiedGen and should be installed after torch
+    /app/venv/bin/pip install kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.6.0_cu124.html && \
     chmod -R 777 /app/venv && \
     # Cleanup pip cache and temporary files
     /app/venv/bin/pip cache purge && \
