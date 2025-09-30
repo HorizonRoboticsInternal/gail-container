@@ -71,6 +71,9 @@ RUN /app/venv/bin/pip install --no-cache-dir torch==2.6.0 torchvision --index-ur
 # Verify PyTorch CUDA
 RUN /app/venv/bin/python -c "import torch, sys; v=torch.__version__; assert '+cu124' in v, f'Expected CUDA 12.4 build, got {v}'"
 
+# Install TensorFlow and tensorboard
+RUN /app/venv/bin/pip install --no-cache-dir tensorflow==2.17.0 tensorboard==2.17.0
+
 # Install requirements
 RUN /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt
 
