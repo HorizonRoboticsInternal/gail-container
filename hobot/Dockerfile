@@ -44,7 +44,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     # Make Python 3 the default
     ln -sf /usr/bin/python3 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip && \
-    # Cleanup
+    # Cleanup \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy GPU configuration files
@@ -62,11 +63,11 @@ COPY requirements.txt /app/
 RUN umask 0000 && \
     python3.10 -m venv /app/venv && \
     /app/venv/bin/pip install --upgrade pip wheel setuptools packaging && \
-    /app/venv/bin/pip install torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu124 && \
-    /app/venv/bin/pip install -r /app/requirements.txt && \
+    /app/venv/bin/pip install --no-cache-dir torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu124 && \
+    /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt && \
     /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu124' in version, f'Expected PyTorch with CUDA 12.4 (+cu124 suffix), but got version {version}'; sys.exit(0)" && \
     # Kaolin is required for EmbodiedGen and should be installed after torch
-    /app/venv/bin/pip install kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.6.0_cu124.html && \
+    /app/venv/bin/pip install --no-cache-dir kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.6.0_cu124.html && \
     chmod -R 777 /app/venv && \
     # Cleanup pip cache and temporary files
     /app/venv/bin/pip cache purge && \
