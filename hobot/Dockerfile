@@ -56,24 +56,44 @@ COPY ./nvidia_layers.json /etc/vulkan/implicit_layer.d/nvidia_layers.json
 # Create working directory and Python environment
 WORKDIR /app
 
-# Use disk-backed temp directory instead of RAM-backed /tmp
-ENV TMPDIR=/app/tmp
-RUN mkdir -p /app/tmp
-
 # Copy requirements first for better layer caching
 COPY requirements.txt /app/
 
-# Create venv and install all Python packages in one layer
-RUN umask 0000 && \
-    python3.10 -m venv /app/venv && \
-    /app/venv/bin/pip install --upgrade pip wheel setuptools packaging && \
-    /app/venv/bin/pip install --no-cache-dir torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu124 && \
-    /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt && \
-    /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu124' in version, f'Expected PyTorch with CUDA 12.4 (+cu124 suffix), but got version {version}'; sys.exit(0)" && \
-    # Kaolin is required for EmbodiedGen and should be installed after torch
-    /app/venv/bin/pip install --no-cache-dir kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.6.0_cu124.html && \
-    chmod -R 777 /app/venv && \
-    # Cleanup pip cache and temporary files
+# Create venv
+RUN python3.10 -m venv /app/venv
+
+# Upgrade pip/setuptools
+RUN /app/venv/bin/pip install --no-cache-dir --upgrade pip wheel setuptools packaging
+
+# Install PyTorch and torchvision
+RUN /app/venv/bin/pip install --no-cache-dir torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu124
+
+# Verify PyTorch CUDA
+RUN /app/venv/bin/python -c "import torch, sys; v=torch.__version__; assert '+cu124' in v, f'Expected CUDA 12.4 build, got {v}'"
+
+# Install requirements
+RUN /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+
+# Install Kaolin (after torch)
+RUN /app/venv/bin/pip install --no-cache-dir kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.6.0_cu124.html
+
+# Cleanup
+RUN chmod -R 777 /app/venv && \
     /app/venv/bin/pip cache purge && \
     find /app/venv -name "*.pyc" -delete && \
     find /app/venv -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+## Create venv and install all Python packages in one layer
+#RUN umask 0000 && \
+#    python3.10 -m venv /app/venv && \
+#    /app/venv/bin/pip install --upgrade pip wheel setuptools packaging && \
+#    /app/venv/bin/pip install --no-cache-dir torch==2.6.0 torchvision --index-url https://download.pytorch.org/whl/cu124 && \
+#    /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt && \
+#    /app/venv/bin/python -c "import torch; import sys; version = torch.__version__; assert '+cu124' in version, f'Expected PyTorch with CUDA 12.4 (+cu124 suffix), but got version {version}'; sys.exit(0)" && \
+#    # Kaolin is required for EmbodiedGen and should be installed after torch
+#    /app/venv/bin/pip install --no-cache-dir kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.6.0_cu124.html && \
+#    chmod -R 777 /app/venv && \
+#    # Cleanup pip cache and temporary files
+#    /app/venv/bin/pip cache purge && \
+#    find /app/venv -name "*.pyc" -delete && \
+#    find /app/venv -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
