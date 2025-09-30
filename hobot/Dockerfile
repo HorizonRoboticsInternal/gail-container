@@ -56,6 +56,10 @@ COPY ./nvidia_layers.json /etc/vulkan/implicit_layer.d/nvidia_layers.json
 # Create working directory and Python environment
 WORKDIR /app
 
+# Use disk-backed temp directory instead of RAM-backed /tmp
+ENV TMPDIR=/app/tmp
+RUN mkdir -p /app/tmp
+
 # Copy requirements first for better layer caching
 COPY requirements.txt /app/
 
